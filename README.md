@@ -57,45 +57,12 @@ Make sure you have these installed before running the project:
 ```bash
 git clone https://github.com/Tanish-boop/Job-Portal.git
 cd Job-Portal
-2️⃣ Install Dependencies
+
+2️⃣ Install dependencies
 npm install
 
-This will install all required dependencies listed in package.json, such as:
-
-
-express
-
-
-mysql2
-
-
-ejs
-
-
-bcrypt
-
-
-express-session
-
-
-connect-flash
-
-
-dotenv
-
-
-
-🗃️ Database Setup
-
-
-Open phpMyAdmin or any MySQL client.
-
-
-Create a new database (example: job_portal).
-
-
-Run the following SQL commands to create tables:
-
+3️⃣ Create the MySQL Database
+CREATE DATABASE job_portal;
 
 CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -125,21 +92,19 @@ CREATE TABLE applications (
     FOREIGN KEY (job_id) REFERENCES jobs(id) ON DELETE CASCADE
 );
 
-
-🧩 Environment Variables
-Create a .env file in your project root and add:
+4️⃣ Configure Environment Variables
+Create a .env file in the root folder and add:
 DB_HOST=localhost
 DB_USER=root
 DB_PASSWORD=yourpassword
 DB_NAME=job_portal
 PORT=3000
+SESSION_SECRET=yourSecretKey
 
-
-▶️ Run the Server
-To start the server, run:
+5️⃣ Run the application
 node app.js
 
-Then open your browser and visit:
+Then open your browser and go to:
 👉 http://localhost:3000
 
 📁 Project Structure
@@ -155,26 +120,15 @@ Job-Portal/
 └── .env                  # Environment variables
 
 
-✨ Future Enhancements
+🧑‍🏫 Author
+👤 Tanish Thakare
+📧 Email me
+🌐 GitHub Profile
 
+⭐ Show Your Support
+If you like this project, please ⭐ the repository and share it with others!
 
-Resume upload feature 📄
+---
 
-
-Email notifications for job updates 📧
-
-
-Admin panel for managing users and jobs 🧑‍💼
-
-
-
-💻 Author
-Tanish Thakare
-📧 tanishthakare@example.com
-🔗 GitHub: Tanish-boop
-
-🏁 License
-This project is licensed under the MIT License — feel free to use and modify it.
-
-
-
+✅ Copy this **entire code block (including the top and bottom triple backticks)** into your `README.md` —  
+GitHub will automatically render all formatting correctly.
