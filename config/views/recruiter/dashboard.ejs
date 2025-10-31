@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Recruiter Dashboard - Job Portal</title>
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+
+    <style>
+        :root {
+            /* Minimalist Palette: Focus on high contrast and simple gray */
+            --primary-color: #007bff; /* Kept for links/navbar */
+            --secondary-color: #6c757d;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --light-bg: #ffffff; /* Pure white background */
+            --card-bg: #ffffff;
+            --border-color: #e5e5e5; /* Very thin, light border */
+            --subtle-bg: #f7f7f7; /* Light gray for subtle sectioning */
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light-bg);
+            color: #333;
+        }
+
+        /* --- Utility & Layout --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .py-5 { padding-top: 50px; padding-bottom: 50px; }
+        .mb-4 { margin-bottom: 20px; }
+        .mt-4 { margin-top: 20px; }
+        .d-flex { display: flex; }
+        .justify-between { justify-content: space-between; }
+        .align-center { align-items: center; }
+        .text-center { text-align: center; }
+        .text-muted { color: var(--secondary-color); }
+        .fw-semibold { font-weight: 600; }
+
+        /* --- Navigation: Stark, primary blue bar --- */
+        .navbar {
+            background: var(--primary-color);
+            padding: 15px 0;
+            box-shadow: none;
+            border-bottom: 1px solid var(--primary-color);
+            color: white;
+        }
+        .navbar-brand {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+            margin-right: 20px;
+        }
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            padding: 8px 15px;
+            display: inline-block;
+        }
+        .nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 0;
+        }
+        .logout-btn {
+            background-color: transparent;
+            border: 1px solid white;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 0;
+            cursor: pointer;
+        }
+        .logout-btn:hover {
+            background-color: white;
+            color: var(--primary-color);
+        }
+
+        /* --- Header and Buttons --- */
+        h1 {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+            border: 1px solid var(--primary-color);
+            padding: 10px 20px;
+            border-radius: 0;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        /* --- Alerts (Kept functional colors) --- */
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 0;
+            border: 1px solid transparent;
+            position: relative;
+        }
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border-color: #c3e6cb;
+        }
+        .alert-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+            border-color: #f5c6cb;
+        }
+        .close-alert {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: inherit;
+        }
+
+        /* --- Cards: Minimal borders, no shadows/hover effects --- */
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 0;
+            border: 1px solid var(--border-color); /* Light border */
+            box-shadow: none;
+            margin-bottom: 20px;
+            padding: 0;
+        }
+        .card:hover {
+            transform: none;
+            border: 1px solid var(--secondary-color); /* Subtle darker border on hover */
+        }
+        .card-header {
+            padding: 15px;
+            border-bottom: 1px solid var(--border-color);
+            background-color: var(--subtle-bg); /* Very light gray */
+            border-radius: 0;
+        }
+        .card-body {
+            padding: 20px;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        .stat-card {
+            padding: 20px;
+            border-radius: 0;
+            text-align: center;
+        }
+
+        /* --- Table Styling: Grayscale and essential lines only --- */
+        .table-container {
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            border: 1px solid var(--border-color); /* Outer border */
+        }
+        th, td {
+            padding: 12px 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        th {
+            /* Minimalist table header: light gray background, dark text */
+            background-color: var(--subtle-bg);
+            color: #333;
+            font-weight: bold;
+        }
+        tbody tr:nth-child(even) {
+            background-color: var(--card-bg); /* White background (no striping effect) */
+        }
+        tbody tr:hover {
+            background-color: #f0f0f0; /* Very light hover effect */
+        }
+        .table-action-btn {
+            padding: 6px 10px;
+            border-radius: 0;
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-right: 5px;
+            border: 1px solid #999; /* Subtle border for buttons */
+            cursor: pointer;
+        }
+        /* Actions are kept to functional colors, but buttons are minimal */
+        .btn-edit {
+            background-color: #fff;
+            color: #333;
+            border-color: #999;
+        }
+        .btn-delete {
+            background-color: var(--danger-color);
+            color: white;
+            border-color: var(--danger-color);
+        }
+        .btn-edit:hover { background-color: #f7f7f7; }
+        .btn-delete:hover { background-color: #c82333; }
+        
+        /* --- Modal --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 0;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: none;
+            border: 1px solid #333;
+        }
+        .modal-footer {
+            margin-top: 20px;
+            text-align: right;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="container d-flex justify-between align-center">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-briefcase me-2"></i>JobPortal
+            </a>
+            <div class="d-flex align-center">
+                <a class="nav-link" href="/">Browse Jobs</a>
+                <span class="nav-link">Welcome, <strong style="color: #ffe082;"><%= user.name %></strong></span>
+                <form action="/logout" method="POST" style="display: inline; margin-left: 10px;">
+                    <button type="submit" class="logout-btn">
+                        <i class="fas fa-sign-out-alt me-1"></i> Logout
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="container py-5">
+        <div class="d-flex justify-between align-center mb-4">
+            <div>
+                <h1>
+                    <i class="fas fa-tachometer-alt" style="color: var(--primary-color);"></i>
+                    Recruiter Dashboard
+                </h1>
+                <p class="text-muted">Manage your job postings and find the perfect candidates</p>
+            </div>
+            <a href="/recruiter/post-job" class="btn-primary">
+                <i class="fas fa-plus"></i> Post New Job
+            </a>
+        </div>
+
+        <% if (success && success.length > 0) { %>
+        <div class="alert alert-success">
+            <i class="fas fa-check-circle"></i> <%= success %>
+            <button onclick="this.parentNode.style.display='none';" class="close-alert">&times;</button>
+        </div>
+        <% } %>
+        <% if (error && error.length > 0) { %>
+        <div class="alert alert-danger">
+            <i class="fas fa-exclamation-triangle"></i> <%= error %>
+            <button onclick="this.parentNode.style.display='none';" class="close-alert">&times;</button>
+        </div>
+        <% } %>
+
+        <div class="stats-grid mb-4">
+            <div class="card stat-card">
+                <i class="fas fa-briefcase fa-2x" style="color: var(--primary-color); margin-bottom: 10px;"></i>
+                <h3 class="fw-semibold"><%= jobs.length %></h3>
+                <p class="text-muted">Active Job Postings</p>
+            </div>
+            <div class="card stat-card">
+                <i class="fas fa-eye fa-2x" style="color: #17a2b8; margin-bottom: 10px;"></i>
+                <h3 class="fw-semibold">-</h3>
+                <p class="text-muted">Total Views (Requires further logic)</p>
+            </div>
+            <div class="card stat-card">
+                <i class="fas fa-user-plus fa-2x" style="color: var(--success-color); margin-bottom: 10px;"></i>
+                <h3 class="fw-semibold">-</h3>
+                <p class="text-muted">Applications Received (Requires DB Join)</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header d-flex justify-between align-center">
+                <h5 class="fw-semibold" style="margin: 0;">
+                    <i class="fas fa-list-ul" style="color: var(--primary-color);"></i> Your Job Postings
+                </h5>
+                <a href="/recruiter/post-job" class="btn-primary" style="padding: 5px 10px; font-size: 0.9rem;">
+                    <i class="fas fa-plus"></i> Add Job
+                </a>
+            </div>
+            <div class="card-body">
+                <% if (jobs.length > 0) { %>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Job Title</th>
+                                <th>Company</th>
+                                <th>Location</th>
+                                <th>Posted Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% jobs.forEach(job => { %>
+                            <tr>
+                                <td>
+                                    <a href="/job/<%= job.jobId %>" class="fw-semibold" style="text-decoration: none; color: var(--primary-color);">
+                                        <%= job.title %>
+                                    </a>
+                                </td>
+                                <td><%= job.company %></td>
+                                <td>
+                                    <% if (job.location) { %>
+                                    <i class="fas fa-map-marker-alt text-muted"></i> <%= job.location %>
+                                    <% } else { %>
+                                    <span class="text-muted">Not specified</span>
+                                    <% } %>
+                                </td>
+                                <td>
+                                    <small class="text-muted">
+                                        <%= new Date(job.postedAt).toLocaleDateString() %>
+                                    </small>
+                                </td>
+                                <td>
+                                    <a href="/recruiter/edit-job/<%= job.jobId %>" class="table-action-btn btn-edit">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </a>
+                                    <button 
+                                        type="button" 
+                                        class="table-action-btn btn-delete"
+                                        onclick="showDeleteModal('<%= job.jobId %>', '<%= job.title.replace(/'/g, "\\'") %>')"
+                                    >
+                                        <i class="fas fa-trash"></i> Delete
+                                    </button>
+                                </td>
+                            </tr>
+                            <% }); %>
+                        </tbody>
+                    </table>
+                </div>
+                <% } else { %>
+                <div class="text-center py-5">
+                    <i class="fas fa-briefcase fa-4x text-muted" style="margin-bottom: 15px;"></i>
+                    <h4 class="text-muted">No Jobs Posted Yet</h4>
+                    <p class="text-muted">Start building your talent pool by posting your first job opening.</p>
+                    <a href="/recruiter/post-job" class="btn-primary" style="margin-top: 15px;">
+                        <i class="fas fa-plus"></i> Post Your First Job
+                    </a>
+                </div>
+                <% } %>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="deleteModal" class="modal-overlay" onclick="closeModal()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="d-flex justify-between align-center" style="margin-bottom: 15px;">
+                <h5 class="fw-semibold">Delete Job</h5>
+                <button type="button" onclick="closeModal()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer;">&times;</button>
+            </div>
+            
+            <p>
+                Are you sure you want to delete "<strong id="jobTitle"></strong>"?
+                This action cannot be undone.
+            </p>
+
+            <div class="modal-footer">
+                <button type="button" onclick="closeModal()" class="table-action-btn" style="background-color: var(--secondary-color); color: white; border: 1px solid var(--secondary-color);">
+                    Cancel
+                </button>
+                <form id="deleteForm" action="" method="POST" style="display: inline;">
+                    <button type="submit" class="table-action-btn btn-delete">Delete Job</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const deleteModal = document.getElementById('deleteModal');
+        const deleteForm = document.getElementById('deleteForm');
+        const jobTitleDisplay = document.getElementById('jobTitle');
+
+        function showDeleteModal(jobId, jobTitle) {
+            jobTitleDisplay.textContent = jobTitle;
+            // The action URL for the POST /recruiter/delete-job/:id route
+            deleteForm.action = '/recruiter/delete-job/' + jobId; 
+            deleteModal.style.display = 'flex';
+        }
+
+        function closeModal() {
+            deleteModal.style.display = 'none';
+        }
+
+        // Close modal when pressing ESC key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>

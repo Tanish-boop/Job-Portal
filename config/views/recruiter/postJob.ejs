@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><%= job ? 'Edit Job' : 'Post New Job' %></title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- General Styles --- */
+        body {
+            font-family: 'Roboto', sans-serif; /* Clean, modern font */
+            background-color: #f4f7f6; /* Very light, off-white background */
+            color: #333; /* Dark gray text */
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 40px auto;
+            padding: 30px;
+            background-color: #ffffff; /* Pure white container background */
+            border-radius: 8px; /* Slightly rounded corners */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+        }
+
+        h1 {
+            color: #007bff; /* Primary blue for headings */
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        /* --- Link Styles --- */
+        a {
+            color: #007bff; /* Blue link color */
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* --- Form Styles --- */
+        form {
+            display: grid;
+            gap: 15px; /* Space between form elements */
+        }
+
+        label {
+            font-weight: 700;
+            color: #333;
+            margin-bottom: -5px; /* Adjust spacing */
+        }
+
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc; /* Light gray border */
+            border-radius: 4px;
+            box-sizing: border-box; /* Include padding in width */
+            font-size: 16px;
+        }
+
+        textarea {
+            resize: vertical; /* Allow vertical resizing only */
+        }
+
+        /* --- Button Style (The main 'Blue' element) --- */
+        button[type="submit"] {
+            background-color: #007bff; /* Bright blue background */
+            color: white; /* White text */
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 700;
+            transition: background-color 0.3s ease; /* Smooth hover effect */
+            margin-top: 10px;
+            justify-self: start; /* Align button to the start/left */
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3; /* Slightly darker blue on hover */
+        }
+
+        /* --- Error Message Style --- */
+        p[style="color: red;"] {
+            background-color: #ffe5e5; /* Very light red background */
+            border: 1px solid red;
+            padding: 10px;
+            border-radius: 4px;
+            color: #cc0000 !important; /* Darker red text for visibility */
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <p><a href="/recruiter/dashboard">← Back to Dashboard</a></p>
+        <h1><%= job ? 'Edit Job Posting' : 'Post a New Job' %> </h1>
+
+        <% if (error && error.length > 0) { %>
+            <p style="color: red;">🚨 <%= error %></p>
+        <% } %>
+
+        <form action="<%= action %>" method="POST">
+            <% if (job) { %>
+                <input type="hidden" name="jobId" value="<%= job.jobId %>">
+            <% } %>
+
+            <label for="title">Job Title:</label>
+            <input type="text" id="title" name="title" value="<%= job ? job.title : '' %>" required>
+
+            <label for="company">Company Name:</label>
+            <input type="text" id="company" name="company" value="<%= job ? job.company : user.name %>" required>
+
+            <label for="location">Location:</label>
+            <input type="text" id="location" name="location" value="<%= job ? job.location : '' %>">
+
+            <label for="salary">Salary (e.g., 60k-80k):</label>
+            <input type="text" id="salary" name="salary" value="<%= job ? job.salary : '' %>">
+
+            <label for="experience_required">Experience Required:</label>
+            <input type="text" id="experience_required" name="experience_required" value="<%= job ? job.experience_required : '' %>">
+
+            <label for="skills">Skills (Comma-separated):</label>
+            <input type="text" id="skills" name="skills" value="<%= job ? job.skills : '' %>">
+            
+            <label for="description">Job Description:</label>
+            <textarea id="description" name="description" rows="10" required><%= job ? job.description : '' %></textarea>
+
+            <button type="submit"><%= job ? 'Save Changes' : 'Post Job' %></button>
+        </form>
+    </div>
+</body>
+</html>
