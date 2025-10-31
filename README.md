@@ -57,5 +57,124 @@ Make sure you have these installed before running the project:
 ```bash
 git clone https://github.com/Tanish-boop/Job-Portal.git
 cd Job-Portal
+2️⃣ Install Dependencies
+npm install
+
+This will install all required dependencies listed in package.json, such as:
+
+
+express
+
+
+mysql2
+
+
+ejs
+
+
+bcrypt
+
+
+express-session
+
+
+connect-flash
+
+
+dotenv
+
+
+
+🗃️ Database Setup
+
+
+Open phpMyAdmin or any MySQL client.
+
+
+Create a new database (example: job_portal).
+
+
+Run the following SQL commands to create tables:
+
+
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100),
+    email VARCHAR(100) UNIQUE,
+    password VARCHAR(255),
+    role ENUM('recruiter', 'seeker'),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE jobs (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(100),
+    description TEXT,
+    company VARCHAR(100),
+    location VARCHAR(100),
+    posted_by INT,
+    FOREIGN KEY (posted_by) REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE TABLE applications (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    job_id INT,
+    applied_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (job_id) REFERENCES jobs(id) ON DELETE CASCADE
+);
+
+
+🧩 Environment Variables
+Create a .env file in your project root and add:
+DB_HOST=localhost
+DB_USER=root
+DB_PASSWORD=yourpassword
+DB_NAME=job_portal
+PORT=3000
+
+
+▶️ Run the Server
+To start the server, run:
+node app.js
+
+Then open your browser and visit:
+👉 http://localhost:3000
+
+📁 Project Structure
+Job-Portal/
+│
+├── app.js                # Main server file
+├── package.json          # Dependencies and scripts
+├── /views                # EJS templates (UI)
+├── /public               # CSS, JS, and Bootstrap files
+├── /routes               # Express route files
+├── /controllers          # Business logic
+├── /models               # Database models
+└── .env                  # Environment variables
+
+
+✨ Future Enhancements
+
+
+Resume upload feature 📄
+
+
+Email notifications for job updates 📧
+
+
+Admin panel for managing users and jobs 🧑‍💼
+
+
+
+💻 Author
+Tanish Thakare
+📧 tanishthakare@example.com
+🔗 GitHub: Tanish-boop
+
+🏁 License
+This project is licensed under the MIT License — feel free to use and modify it.
+
 
 
