@@ -122,13 +122,8 @@ Job-Portal/
 
 🧑‍🏫 Author
 👤 Tanish Thakare
-📧 Email me
-🌐 GitHub Profile
+📧 tanish.thakare2005@gmail.com
 
 ⭐ Show Your Support
 If you like this project, please ⭐ the repository and share it with others!
 
----
-
-✅ Copy this **entire code block (including the top and bottom triple backticks)** into your `README.md` —  
-GitHub will automatically render all formatting correctly.
