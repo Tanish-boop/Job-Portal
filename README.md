@@ -52,10 +52,12 @@ Make sure you have these installed before running the project:
 ---
 
 ## 📦 Installation Steps
-bash```
-1️⃣ Clone the repository
+
+### 1️⃣ Clone the repository
+```bash
 git clone https://github.com/Tanish-boop/Job-Portal.git
 cd Job-Portal
+
 
 2️⃣ Install dependencies
 npm install
@@ -125,6 +127,7 @@ Job-Portal/
 
 ⭐ Show Your Support
 If you like this project, please ⭐ the repository and share it with others!
+
 
 
 
