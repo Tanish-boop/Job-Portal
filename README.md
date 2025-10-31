@@ -52,7 +52,7 @@ Make sure you have these installed before running the project:
 ---
 
 ## 📦 Installation Steps
-
+bash```
 1️⃣ Clone the repository
 git clone https://github.com/Tanish-boop/Job-Portal.git
 cd Job-Portal
