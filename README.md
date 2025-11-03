@@ -59,55 +59,6 @@ git clone https://github.com/Tanish-boop/Job-Portal.git
 cd Job-Portal
 
 
-2️⃣ Install dependencies
-npm install
-
-3️⃣ Create the MySQL Database
-CREATE DATABASE job_portal;
-
-CREATE TABLE users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100),
-    email VARCHAR(100) UNIQUE,
-    password VARCHAR(255),
-    role ENUM('recruiter', 'seeker'),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-CREATE TABLE jobs (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(100),
-    description TEXT,
-    company VARCHAR(100),
-    location VARCHAR(100),
-    posted_by INT,
-    FOREIGN KEY (posted_by) REFERENCES users(id) ON DELETE CASCADE
-);
-
-CREATE TABLE applications (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT,
-    job_id INT,
-    applied_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-    FOREIGN KEY (job_id) REFERENCES jobs(id) ON DELETE CASCADE
-);
-
-4️⃣ Configure Environment Variables
-Create a .env file in the root folder and add:
-DB_HOST=localhost
-DB_USER=root
-DB_PASSWORD=yourpassword
-DB_NAME=job_portal
-PORT=3000
-SESSION_SECRET=yourSecretKey
-
-5️⃣ Run the application
-node app.js
-
-Then open your browser and go to:
-👉 http://localhost:3000
-
 📁 Project Structure
 Job-Portal/
 │
@@ -127,6 +78,7 @@ Job-Portal/
 
 ⭐ Show Your Support
 If you like this project, please ⭐ the repository and share it with others!
+
 
 
 
